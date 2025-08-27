@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge 2: Local Storage Tampering</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; text-align: center; }
+        .container { background-color: white; padding: 2rem; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { font-size: 2rem; }
+        p { font-size: 1.2rem; }
+        button { padding: 0.5rem 1rem; font-size: 1rem; margin-top: 1rem; }
+        .win-message { color: green; font-weight: bold; font-size: 1.5rem; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Local Storage Score Game</h1>
+        <p>Your current score is: <span id="score">0</span></p>
+        <p>You need a score of 1000 to win!</p>
+        <button id="increase-score">Increase Score by 1</button>
+        <div id="win-message" class="win-message" style="display: none;">
+            🎉 You Win! 🎉
+        </div>
+    </div>
+
+    <script>
+        const scoreElement = document.getElementById('score');
+        const increaseScoreButton = document.getElementById('increase-score');
+        const winMessageElement = document.getElementById('win-message');
+        const winningScore = 1000;
+
+        // Initialize score from local storage or set to 0
+        let score = localStorage.getItem('userScore');
+        if (score === null) {
+            score = 0;
+            localStorage.setItem('userScore', score);
+        } else {
+            score = parseInt(score, 10);
+        }
+
+        // Function to update the score display and check for win condition
+        function updateScoreDisplay() {
+            scoreElement.textContent = score;
+            if (score >= winningScore) {
+                winMessageElement.style.display = 'block';
+                increaseScoreButton.disabled = true;
+            }
+        }
+
+        // Event listener for the button
+        increaseScoreButton.addEventListener('click', () => {
+            score++;
+            localStorage.setItem('userScore', score);
+            updateScoreDisplay();
+        });
+
+        // Initial display update
+        updateScoreDisplay();
+    </script>
+</body>
+</html>

